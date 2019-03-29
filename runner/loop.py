@@ -35,6 +35,8 @@ def experiment_loop(exp_info, results_savedir, state_savepath=None):
         with open(result_savepath, 'wb') as f:
             pickle.dump(result, f)
 
+        state[args_repr] = experiment_id
+
         if state_savepath:
             with open(state_savepath, 'a') as f:
                 f.write(f'{args_repr}\t{experiment_id}\n')

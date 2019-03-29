@@ -29,12 +29,12 @@ def _process_run_level(run_info, search_method, values, default_values):
 
 
 def _process_grid_search(keys, values, default_values):
-    vals = ([default_values[k], *values[k]] for k in keys)
+    vals = ([*([default_values.get(k)] or []), *values[k]] for k in keys)
     for arg_vals in itertools.product(*vals):
         yield {**default_values, **dict(zip(keys, arg_vals))}
 
 
 def _process_individual_search(keys, values, default_values):
     for k in keys:
-        for v in [default_values[k], *values[k]]:
+        for v in [*([default_values.get(k)] or []), *values[k]]:
             yield {**default_values, k: v}
