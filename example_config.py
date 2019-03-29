@@ -17,7 +17,7 @@ RUN_1 = {
         'individual_search': {
             'args': ['a'],
             'grid_search': ['b', 'c']
-        }
+        },
         'grid_search': ['a', 'b'],
         'individual_search': ['c']
     }
