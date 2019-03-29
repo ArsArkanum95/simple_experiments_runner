@@ -13,6 +13,12 @@ RUN_1 = {
         'b': [3, 4, 5],
         'c': [4, 5, 6]
     },
-    'grid_search': ['a', 'b'],
-    'individual_search': ['c']
+    'run': {
+        'individual_search': {
+            'args': ['a'],
+            'grid_search': ['b', 'c']
+        }
+        'grid_search': ['a', 'b'],
+        'individual_search': ['c']
+    }
 }
