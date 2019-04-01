@@ -2,7 +2,7 @@ import os
 import os.path
 import pickle
 
-from .processors import process_exp_info
+from .processors import process_flags_in_args, process_exp_info
 from .serializers import arg_dict_serializer
 
 
@@ -22,13 +22,21 @@ def experiment_loop(exp_info, results_savedir, state_savepath=None):
     function = exp_info['function']
 
     for args in process_exp_info(exp_info['run'], exp_info['values'],
-                                  exp_info['default_values']):
+                                  exp_info.get('default_values')):
+
+        new_experiment_id = experiment_id + 1
+        args = process_flags_in_args(args, new_experiment_id)
+
         args_repr = arg_dict_serializer(args)
         if args_repr in state:
             continue
 
-        result = function(**args)
-        experiment_id = experiment_id + 1
+        try:
+            result = function(**args)
+            experiment_id = new_experiment_id
+        except:
+            # TODO print something meaningful here
+            continue
 
         result_savepath = os.path.join(results_savedir, str(experiment_id)) + \
                           '.result.pckl'

@@ -1,7 +1,14 @@
 import itertools
 
 
-def process_exp_info(run_info, values, default_values):
+def process_flags_in_args(args, experiment_id):
+    return {k: (experiment_id if v == '$id' else v) for k, v in args.items()}
+
+
+def process_exp_info(run_info, values, default_values=None):
+    if default_values is None:
+        default_values = {}
+
     if 'grid_search' in run_info:
         yield from _process_run_level(
             run_info['grid_search'],
