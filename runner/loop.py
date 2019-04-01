@@ -32,11 +32,14 @@ def experiment_loop(exp_info, results_savedir, state_savepath=None):
             continue
 
         try:
+            exp_info.get('pre_hook', lambda: None)()
             result = function(**args)
-            experiment_id = new_experiment_id
+            exp_info.get('post_hook', lambda: None)()
         except:
             # TODO print something meaningful here
             continue
+
+        experiment_id = new_experiment_id
 
         result_savepath = os.path.join(results_savedir, str(experiment_id)) + \
                           '.result.pckl'
