@@ -35,14 +35,21 @@ def _process_run_level(run_info, search_method, values, default_values):
         yield from search_method(run_info, values, default_values)
 
 
-def _process_grid_search(keys, values, default_values):
+def _process_grid_search(keys, values, default_values):  # TODO add support for grouped keys
     vals = (([default_values[k]] if k in default_values else []) + values[k]
             for k in keys)
     for arg_vals in itertools.product(*vals):
         yield {**default_values, **dict(zip(keys, arg_vals))}
 
 
-def _process_individual_search(keys, values, default_values):
-    for k in keys:
-        for v in ([default_values[k]] if k in default_values else []) + values[k]:
-            yield {**default_values, k: v}
+def _process_individual_search(keys, values, default_values):  # TODO give choice to exclude default_values
+    for ks in keys:
+        if not isinstance(ks, (tuple, list)):
+            ks = [ks]
+
+        grouped_values = zip(
+            *(([default_values[sub_k]] if sub_k in default_values else []) + \
+                values[sub_k] for sub_k in ks)
+        )
+        for vs in grouped_values:
+            yield {**default_values, **dict(zip(ks, vs))}
