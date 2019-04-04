@@ -3,7 +3,7 @@
 def sample_function(a, b, c):
     return a + b * c
 
-RUN_1 = {
+RUN_test = {
     'function': sample_function,
     'default_values': {
         'a': 1, 'b': 2, 'c': 3
