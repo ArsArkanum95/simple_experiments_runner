@@ -24,12 +24,14 @@ def experiment_loop(exp_info, results_savedir, state_savepath=None):
     for args in process_exp_info(exp_info['run'], exp_info['values'],
                                   exp_info.get('default_values')):
 
-        new_experiment_id = experiment_id + 1
-        args = process_flags_in_args(args, new_experiment_id)
+        # TODO make it possible to choose if expanded arg counts as unique state
 
         args_repr = arg_dict_serializer(args)
         if args_repr in state:
             continue
+
+        new_experiment_id = experiment_id + 1
+        args = process_flags_in_args(args, new_experiment_id)
 
         try:
             exp_info.get('pre_hook', lambda: None)()
