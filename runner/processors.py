@@ -2,7 +2,9 @@ import itertools
 
 
 def process_flags_in_args(args, experiment_id):
-    return {k: (experiment_id if v == '$id' else v) for k, v in args.items()}
+    experiment_id = str(experiment_id)
+    return {k: (v.replace('${id}', experiment_id) if isinstance(v, str) else v)
+            for k, v in args.items()}
 
 
 def process_exp_info(run_info, values, default_values=None):

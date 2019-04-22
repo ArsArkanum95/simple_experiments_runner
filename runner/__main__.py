@@ -6,7 +6,7 @@ from .loop import experiment_loop
 
 
 def perform_experiments(config_module, results_savedir, state_savedir=None):
-    RUN_REGEXP = re.compile(r'RUN_\d+')
+    RUN_REGEXP = re.compile(r'RUN_\w+')
     run_names = [attr_name for attr_name in dir(config_module)
             if RUN_REGEXP.fullmatch(attr_name)]
 
