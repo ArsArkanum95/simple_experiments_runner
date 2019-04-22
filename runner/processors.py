@@ -9,6 +9,10 @@ def process_exp_info(run_info, values, default_values=None):
     if default_values is None:
         default_values = {}
 
+    if run_info == 'default':
+        yield default_values
+        return
+
     if 'grid_search' in run_info:
         yield from _process_run_level(
             run_info['grid_search'],
