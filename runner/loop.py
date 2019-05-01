@@ -33,13 +33,14 @@ def experiment_loop(exp_info, results_savedir, state_savepath=None):
         new_experiment_id = experiment_id + 1
         args = process_flags_in_args(args, new_experiment_id)
 
+        exp_info.get('pre_hook', lambda: None)()
         try:
-            exp_info.get('pre_hook', lambda: None)()
             result = function(**args)
-            exp_info.get('post_hook', lambda: None)()
         except Exception as e:
             print('Error:', e)
             continue
+        finally:
+            exp_info.get('post_hook', lambda: None)()
 
         experiment_id = new_experiment_id
 
