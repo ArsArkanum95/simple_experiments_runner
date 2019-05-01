@@ -37,8 +37,8 @@ def experiment_loop(exp_info, results_savedir, state_savepath=None):
             exp_info.get('pre_hook', lambda: None)()
             result = function(**args)
             exp_info.get('post_hook', lambda: None)()
-        except:
-            # TODO print something meaningful here
+        except Exception as e:
+            print('Error:', e)
             continue
 
         experiment_id = new_experiment_id
